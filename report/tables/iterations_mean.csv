@@ -1,0 +1,17 @@
+dataset,mode,iteration,recall,answer_in_context,f1,correct,context_words
+hotpotqa,iterative,1,0.7442,0.7083,0.4859,0.5067,178.9817
+hotpotqa,iterative,2,0.9158,0.8917,0.5061,0.535,381.0183
+hotpotqa,iterative,3,0.9483,0.925,0.511,0.5383,587.8133
+hotpotqa,iterative,4,0.9542,0.9283,0.5026,0.5283,795.9667
+hotpotqa,single,1,0.7442,0.7083,0.4853,0.5067,179.0483
+hotpotqa,single,2,0.8708,0.8283,0.503,0.5283,379.96
+hotpotqa,single,3,0.9133,0.8783,0.499,0.5267,591.1417
+hotpotqa,single,4,0.94,0.92,0.494,0.5183,800.2783
+squad,iterative,1,0.9283,0.9367,0.818,0.8333,225.9317
+squad,iterative,2,0.9567,0.9633,0.8116,0.825,440.17
+squad,iterative,3,0.9633,0.9683,0.7954,0.8083,652.335
+squad,iterative,4,0.97,0.975,0.7942,0.8067,862.645
+squad,single,1,0.9283,0.9367,0.818,0.8333,226.0183
+squad,single,2,0.9583,0.9667,0.8151,0.8283,440.7117
+squad,single,3,0.9783,0.9783,0.807,0.82,658.1133
+squad,single,4,0.9867,0.99,0.8031,0.815,870.065

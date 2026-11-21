@@ -1,0 +1,33 @@
+[project]
+name = "stat-rag"
+version = "0.1.0"
+description = "Статистический анализ качества RAG на HotpotQA и SQuAD"
+requires-python = ">=3.11"
+dependencies = [
+    "bm25s>=0.3.16",
+    "datasets>=5.2.0",
+    "ipykernel>=7.4.0",
+    "jupyter>=1.1.1",
+    "matplotlib>=3.11.2",
+    "nbconvert>=7.17.2",
+    "nbformat>=5.11.1",
+    "numpy>=2.4.6",
+    "pandas>=3.1.1",
+    "pip>=26.3",
+    "pyarrow>=26.0.1",
+    "python-dotenv>=1.2.4",
+    "rich>=15.0.0",
+    "scikit-learn>=1.9.1",
+    "scipy>=1.17.1",
+    "seaborn>=0.13.2",
+    "sentence-transformers>=6.3.0",
+    "statsmodels>=0.15.0",
+    "torch>=2.15.0",
+    "tqdm>=4.70.1",
+    "transformers>=5.23.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+]

@@ -1,0 +1,9 @@
+,dataset,coef,odds_ratio,p
+Intercept,hotpotqa,0.0468,1.0479,0.6028
+"C(mode, Treatment('single'))[T.iterative]",hotpotqa,-0.0067,0.9933,0.7126
+iteration,hotpotqa,0.0134,1.0134,0.5146
+"iteration:C(mode, Treatment('single'))[T.iterative]",hotpotqa,0.0141,1.0142,0.1978
+Intercept,squad,1.6547,5.2315,0.0
+"C(mode, Treatment('single'))[T.iterative]",squad,0.0146,1.0147,0.6221
+iteration,squad,-0.0437,0.9572,0.0673
+"iteration:C(mode, Treatment('single'))[T.iterative]",squad,-0.0214,0.9789,0.253

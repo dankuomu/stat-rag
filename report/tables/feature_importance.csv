@@ -1,0 +1,13 @@
+,auc_drop
+reader_score,0.211
+is_hotpot,0.0386
+pred_rank,0.0282
+q_len,0.0208
+top1_score_r,0.0112
+score_margin_r,0.0075
+ret_bm25,0.0013
+context_words,0.001
+top_k,0.0008
+ret_hybrid,0.0004
+chunk_size,0.0003
+ret_dense,-0.0002

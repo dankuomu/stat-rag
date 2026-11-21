@@ -1,0 +1,43 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[left=30mm,right=15mm,top=20mm,bottom=20mm]{geometry}
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setmainlanguage{russian}
+\setotherlanguage{english}
+\setmainfont[Ligatures=TeX]{PT Serif}
+\setsansfont[Ligatures=TeX]{PT Sans}
+\setmonofont[Scale=0.85]{PT Mono}
+\newfontfamily\cyrillicfont[Ligatures=TeX,Script=Cyrillic]{PT Serif}
+\newfontfamily\cyrillicfontsf[Ligatures=TeX,Script=Cyrillic]{PT Sans}
+\newfontfamily\cyrillicfonttt[Scale=0.85,Script=Cyrillic]{PT Mono}
+\usepackage{xcolor}
+\definecolor{accent}{HTML}{1F4E79}
+\definecolor{boxbg}{HTML}{EAF1F8}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{tcolorbox}
+\usepackage{fancyvrb}
+\setstretch{1.15}
+\setlength{\parindent}{1.25cm}
+\setlist{nosep,leftmargin=1.5em}
+\titleformat{\section}{\large\bfseries\color{accent}}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0.6em}{}
+\DeclareCaptionLabelSeparator{gost}{~--- }
+\captionsetup[table]{font=small,labelfont=bf,labelsep=gost,skip=4pt,justification=raggedright,singlelinecheck=false}
+\captionsetup[figure]{font=small,labelfont=bf,labelsep=gost,skip=4pt}
+\usepackage[hidelinks]{hyperref}
+\usepackage[normalem]{ulem}
+\let\plainhref\href
+\renewcommand{\href}[2]{\plainhref{#1}{\uline{\textcolor{accent}{#2}}}}
+\newcommand{\tabcap}[1]{\captionof{table}{#1}}
+\newenvironment{gosttable}[1]{\begin{center}\begin{minipage}{\linewidth}\tabcap{#1}\centering\small}{\end{minipage}\end{center}}
+\setcounter{tocdepth}{2}
+\makeatletter\let\inputtab\@@input\makeatother
+\setlength{\emergencystretch}{3em}
+\usepackage{float}

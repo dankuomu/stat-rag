@@ -1,0 +1,116 @@
+\input{preamble.tex}
+
+\begin{document}
+
+\begin{titlepage}
+\centering
+{\large Санкт-Петербургский государственный университет\par}
+\vspace{3cm}
+{\large Проект по дисциплине <<Статистические методы>>\par}
+\vspace{3cm}
+{\LARGE\bfseries Статистический анализ качества RAG\par}
+\vspace{0.8cm}
+{\large Влияние параметров поиска и свойств вопроса на качество ответа: HotpotQA и SQuAD\par}
+\vspace{4cm}
+\begin{flushright}
+Выполнил: Ручьев И.\,А.\par
+\end{flushright}
+\vfill
+{Санкт-Петербург, 2026\par}
+\end{titlepage}
+
+\begin{tcolorbox}[colback=boxbg,colframe=accent,boxrule=0.6pt,arc=0pt,left=8pt,right=8pt,top=6pt,bottom=6pt]
+\small
+Система RAG (BM25, плотный и гибридный поиск + экстрактивный ридер) прогнана на 600 вопросах HotpotQA и 600 вопросах SQuAD по сетке из 72 конфигураций: ретривер, top-k, размер чанка. Отдельно прогнан итеративный поиск в 4 шага. По логам поиска и ответов проверены шесть гипотез, построены регрессия F1 и классификатор правильности.
+
+Параметры системы значимо меняют полноту поиска, но внутри датасета объясняют около 1\,\% дисперсии F1 ответа; на вопрос приходится 60--68\,\%. Прирост F1 от top-5 к top-10 не превышает 0,018. Итеративный поиск повышает полноту на многошаговых вопросах на 4,5 пункта, на одношаговых снижает ее; на F1 итерации сами по себе не влияют. Правильность предсказуема по логу без эталона с ROC-AUC 0,84.
+\end{tcolorbox}
+
+\tableofcontents
+\newpage
+
+\input{part1.tex}
+\input{part2.tex}
+
+\input{biblio.tex}
+
+\appendix
+\renewcommand{\thesection}{\Asbuk{section}}
+\section{Структура логов}\label{app:logs}
+\begingroup\raggedright
+
+\textbf{Лог ответов} (\texttt{answer\_log.parquet}, 43\,200 строк) --- строка на вопрос $\times$ конфигурацию: \texttt{dataset, qid, retriever, chunk\_size, top\_k}; свойства вопроса \texttt{q\_type, level, q\_len, answer\_len, answer\_is\_numeric, lex\_overlap}; поиск \texttt{hit\_at\_k, recall\_at\_k, mrr\_at\_k, answer\_in\_context, top1\_score, score\_margin, context\_words}; ответ \texttt{prediction, gold, reader\_score, pred\_rank, em, f1, correct}.
+
+\textbf{Лог поиска} (\texttt{search\_log.parquet}, 108\,000 строк) --- строка на вопрос $\times$ ретривер $\times$ чанк $\times$ позицию выдачи 1--10: \texttt{chunk\_id, doc\_id, retrieval\_score, is\_relevant, has\_answer, reader\_answer, reader\_score}.
+
+\textbf{Лог итераций} (\texttt{iteration\_log.parquet}, 9\,600 строк) --- строка на вопрос $\times$ режим $\times$ шаг: \texttt{query\_len, context\_words, recall, hit, answer\_in\_context, prediction, em, f1, correct}.
+
+\par\endgroup
+
+\section{Метрики по всей сетке}\label{app:grid}
+
+\begin{gosttable}{F1 ответа по конфигурациям, HotpotQA}
+\begin{tabular}{lrrrrr}
+\toprule
+Ретривер & Чанк, слов & top-1 & top-3 & top-5 & top-10 \\
+\midrule
+\inputtab tables/tab_grid_hotpot_f1.tex 
+\bottomrule
+\end{tabular}
+\end{gosttable}
+
+\begin{gosttable}{F1 ответа по конфигурациям, SQuAD}
+\begin{tabular}{lrrrrr}
+\toprule
+Ретривер & Чанк, слов & top-1 & top-3 & top-5 & top-10 \\
+\midrule
+\inputtab tables/tab_grid_squad_f1.tex 
+\bottomrule
+\end{tabular}
+\end{gosttable}
+
+\begin{gosttable}{Полнота поиска по конфигурациям, HotpotQA}
+\begin{tabular}{lrrrrr}
+\toprule
+Ретривер & Чанк, слов & top-1 & top-3 & top-5 & top-10 \\
+\midrule
+\inputtab tables/tab_grid_hotpot_recall.tex 
+\bottomrule
+\end{tabular}
+\end{gosttable}
+
+\begin{gosttable}{Полнота поиска по конфигурациям, SQuAD}
+\begin{tabular}{lrrrrr}
+\toprule
+Ретривер & Чанк, слов & top-1 & top-3 & top-5 & top-10 \\
+\midrule
+\inputtab tables/tab_grid_squad_recall.tex 
+\bottomrule
+\end{tabular}
+\end{gosttable}
+
+\section{Диагностика регрессии}\label{app:diag}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\linewidth]{figures/ols_diagnostics.pdf}
+\caption{Остатки МНК против предсказания и Q-Q график остатков}
+\end{figure}
+
+\section{Воспроизведение}\label{app:repro}
+
+Код --- репозиторий \texttt{stat-rag}, Python 3.11, менеджер окружения uv. Зерно выборки 42. Прогон сетки на Apple M4 Pro --- 13 минут, итеративный прогон --- 3,5 минуты, анализ --- около минуты. Скачивается около 350~МБ (HotpotQA train --- 326~МБ). Ревизии моделей и датасетов на Hugging Face закреплены в коде. Логи прогона лежат в репозитории, поэтому анализ и отчет пересобираются без повторного прогона за пару минут. Сборка PDF --- xelatex трижды, нужны шрифты PT Serif, PT Sans, PT Mono.
+
+\begin{Verbatim}[fontsize=\small]
+uv sync
+uv run python scripts/download_data.py
+uv run python src/stat_rag/run_grid.py
+uv run python src/stat_rag/run_iterative.py
+uv run python notebooks/build_notebook.py
+uv run jupyter nbconvert --to notebook --execute --inplace notebooks/analysis.ipynb
+uv run python report/make_tables.py
+cd report && xelatex <отчет>.tex  # трижды
+uv run pytest tests/ -q
+\end{Verbatim}
+
+\end{document}

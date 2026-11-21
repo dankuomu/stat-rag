@@ -1,0 +1,11 @@
+,std_coef
+is_hotpot,-0.9007
+ret_bm25,-0.0455
+score_margin_r,-0.0258
+context_words,-0.0099
+ret_dense,0.0169
+ret_hybrid,0.0286
+chunk_size,0.0536
+top_k,0.1627
+q_len,0.2637
+top1_score_r,0.39

@@ -1,0 +1,12 @@
+.venv/
+data/raw/
+data/logs/*.out
+data/logs/STATUS
+__pycache__/
+.ipynb_checkpoints/
+.pytest_cache/
+*.pyc
+report/*.aux
+report/*.log
+report/*.toc
+report/*.out
